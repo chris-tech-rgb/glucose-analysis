@@ -52,7 +52,7 @@ def comparison(imgs):
     axes[0, i] = fig.add_subplot(2, number, 1+i)
     axes[0, i].axis("off")
     axes[0, i].imshow(imgs[image_names[i]])
-    axes[0, i].set_title(image_names[i][:-4])
+    axes[0, i].set_title(image_names[i].split('mM')[0])
   axes[1, 0] = fig.add_subplot(2, 1, 2)
   # Show RGB values
   concentrations = np.array([float(i.split('mM')[0]) for i in image_names])
