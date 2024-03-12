@@ -2,7 +2,6 @@
 
 Draw a calibration curve.
 """
-import image_processing as ip
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -46,54 +45,51 @@ def rgb_stdev(imgs):
   st_dev = [statistics.stdev(rs), statistics.stdev(gs), statistics.stdev(bs)]
   return average_rgb, st_dev
 
-def comparison(images, ph_range):
+def comparison(images, concentration_range):
   """Display the result of comparison and the RGB value of each one."""
   # Remove background
-  processed_images = []
-  for i in range(0, len(ph_range)):
-    processed_images.append([ip.remove_background(j, ip.preprocess(j)) for j in images[i]])
   # Show RGB values
-  pHs = ph_range
+  concentrations = concentration_range
   rgb = []
   sd = []
-  for i in processed_images:
+  for i in images:
     color, st_dev = rgb_stdev(i)
     rgb.append(color)
     sd.append(st_dev)
   # Plots and errorbars of R
   red = np.array([i[0] for i in rgb])
   red_sd = [i[0] for i in sd]
-  p1 = plt.plot(pHs, red, color="lightcoral", marker="o")
-  plt.errorbar(pHs, red, red_sd, color="lightcoral", capsize=5)
+  p1 = plt.plot(concentrations, red, color="lightcoral", marker="o")
+  plt.errorbar(concentrations, red, red_sd, color="lightcoral", capsize=5)
   # Plots and errorbars of G
   green = np.array([i[1] for i in rgb])
   green_sd = [i[1] for i in sd]
-  p2 = plt.plot(pHs, green, color="yellowgreen", marker="D")
-  plt.errorbar(pHs, green, green_sd, color="yellowgreen", capsize=5)
+  p2 = plt.plot(concentrations, green, color="yellowgreen", marker="D")
+  plt.errorbar(concentrations, green, green_sd, color="yellowgreen", capsize=5)
   # Plots and errorbars of B
   blue = np.array([i[2] for i in rgb])
   blue_sd = [i[2] for i in sd]
-  p3 = plt.plot(pHs, blue, color="cornflowerblue", marker="s")
-  plt.errorbar(pHs, blue, blue_sd, color="cornflowerblue", capsize=5)
+  p3 = plt.plot(concentrations, blue, color="cornflowerblue", marker="s")
+  plt.errorbar(concentrations, blue, blue_sd, color="cornflowerblue", capsize=5)
   # Color bars
   # plt.bar(pHs, [100] * 7, width=0.1, color=[(i[0]/100, i[1]/100, i[2]/100, 0.2) for i in rgb])
   # Add legends
   plt.legend((p1[0], p2[0], p3[0]), ("R", "G", "B"), loc='upper right')
   # Axis range
-  plt.axis([2.8, 9.2, 0, 100])
+  plt.axis([-0.1, 2.1, 0, 100])
   plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
   plt.gca().xaxis.set_minor_locator(MultipleLocator(0.5))
   plt.gca().yaxis.set_minor_locator(MultipleLocator(10))
-  plt.xlabel("pH")
+  plt.xlabel("Concentration(mM)")
   plt.ylabel("Percentage of RGB color(%)")
   plt.show()
 
 def main():
   images = []
-  ph_range = range(3, 10)
-  for i in ph_range:
+  concentration_range = [2]
+  for i in concentration_range:
     images.append(load_images('calibration curve//' + str(i)))
-  comparison(images, ph_range)
+  comparison(images, concentration_range)
 
 
 if __name__ == "__main__":
