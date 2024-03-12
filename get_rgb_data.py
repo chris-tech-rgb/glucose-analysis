@@ -60,25 +60,25 @@ def comparison(imgs):
     axes[0, i].set_title(image_names[i][:-4])
   axes[1, 0] = fig.add_subplot(2, 1, 2)
   # Show RGB values
-  pHs = np.array([float(re.findall(r'\d+\.\d+', i)[0]) for i in image_names])
+  concentrations = np.array([float(re.findall(r'\d+\.\d+', i)[0]) for i in image_names])
   rgb = []
   for i in image_names:
     rgb.append(get_rgb(processed_images[i]))
   # Plots of R
   red = np.array([i[0] for i in rgb])
-  p1 = axes[1, 0].plot(pHs, red, color="lightcoral", marker="o")
+  p1 = axes[1, 0].plot(concentrations, red, color="lightcoral", marker="o")
   # Plots of G
   green = np.array([i[1] for i in rgb])
-  p2 = axes[1, 0].plot(pHs, green, color="yellowgreen", marker="D")
+  p2 = axes[1, 0].plot(concentrations, green, color="yellowgreen", marker="D")
   # Plots of B
   blue = np.array([i[2] for i in rgb])
-  p3 = axes[1, 0].plot(pHs, blue, color="cornflowerblue", marker="s")
+  p3 = axes[1, 0].plot(concentrations, blue, color="cornflowerblue", marker="s")
   # Show RGB values
-  for a, b in zip(pHs, red):
+  for a, b in zip(concentrations, red):
     axes[1, 0].text(a, b, str("{:.2f}".format(b)), color="lightcoral")
-  for a, b in zip(pHs, green):
+  for a, b in zip(concentrations, green):
     axes[1, 0].text(a, b, str("{:.2f}".format(b)), color="yellowgreen")
-  for a, b in zip(pHs, blue):
+  for a, b in zip(concentrations, blue):
     axes[1, 0].text(a, b, str("{:.2f}".format(b)), color="cornflowerblue")
   # Add legends
   axes[1, 0].legend((p1[0], p2[0], p3[0]), ("R", "G", "B"), loc='center left', bbox_to_anchor=(1, 0.5))
@@ -86,7 +86,7 @@ def comparison(imgs):
   # Save data
   with open('training data.csv', 'w') as f:
     writer = csv.writer(f)
-    writer.writerow(pHs)
+    writer.writerow(concentrations)
     writer.writerow(["{:.2f}".format(i[0]) for i in rgb])
     writer.writerow(["{:.2f}".format(i[1]) for i in rgb])
     writer.writerow(["{:.2f}".format(i[2]) for i in rgb])
