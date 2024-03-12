@@ -86,7 +86,7 @@ def comparison(images, concentration_range):
 
 def main():
   images = []
-  concentration_range = [2]
+  concentration_range = [0, 2]
   for i in concentration_range:
     images.append(load_images('calibration curve//' + str(i)))
   comparison(images, concentration_range)
