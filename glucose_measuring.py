@@ -3,7 +3,6 @@ This script get RGB values from images in a specific folder.
 And then, calculate the glucose concentrations according to the fitting function and RGB values of images.
 """
 import csv
-import image_processing as ip
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -42,7 +41,7 @@ def fitting_function(rgb):
   popt = [float(i) for i in rows[0]]
   return popt[0] * rgb[0]**popt[1] + popt[2] * rgb[1]**popt[3] + popt[4] * rgb[2]**popt[5]
 
-def predict_pH(imgs):
+def concentration(imgs):
   """Display the result."""
   # Count number
   number = len(imgs)
@@ -50,22 +49,19 @@ def predict_pH(imgs):
     return
   # Remove background
   image_names = list(imgs.keys())
-  processed_images = {}
-  for i in image_names:
-    processed_images[i] = ip.remove_background(imgs[i], ip.preprocess(imgs[i]))
   # Display images
   fig = plt.figure(figsize=(8, 8))
   axes = np.zeros((2, number), dtype=object)
   for i in range(0, number):
     axes[0, i] = fig.add_subplot(2, number, 1+i)
     axes[0, i].axis("off")
-    axes[0, i].imshow(processed_images[image_names[i]])
+    axes[0, i].imshow(imgs[image_names[i]])
     axes[0, i].set_title(image_names[i][:-4].split(' ')[0])
   axes[1, 0] = fig.add_subplot(2, 1, 2)
   # Show RGB values
   rgb = []
   for i in image_names:
-    rgb.append(average_rgb(processed_images[i]))
+    rgb.append(average_rgb(imgs[i]))
   # Show values of R
   red = np.array([i[0] for i in rgb])
   p1 = axes[1, 0].plot(range(0, number), red, color="lightcoral", marker=".", linestyle=":")
@@ -92,7 +88,7 @@ def predict_pH(imgs):
 
 def main():
   image_dict = load_images('samples')
-  predict_pH(image_dict)
+  concentration(image_dict)
 
 
 if __name__ == "__main__":

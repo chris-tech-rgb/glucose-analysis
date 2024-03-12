@@ -7,11 +7,9 @@ The script remove the background of an image before geting the average RGB value
 The comprison of processed images and their RGB values is shown as a figure.
 """
 import csv
-import image_processing as ip
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-import re
 import skimage as ski
 from natsort import natsorted
 
@@ -47,23 +45,20 @@ def comparison(imgs):
     return
   # Remove background
   image_names = list(imgs.keys())
-  processed_images = {}
-  for i in image_names:
-    processed_images[i] = ip.remove_background(imgs[i], ip.preprocess(imgs[i]))
   # Display images
   fig = plt.figure(figsize=(8, 8))
   axes = np.zeros((2, number), dtype=object)
   for i in range(0, number):
     axes[0, i] = fig.add_subplot(2, number, 1+i)
     axes[0, i].axis("off")
-    axes[0, i].imshow(processed_images[image_names[i]])
+    axes[0, i].imshow(imgs[image_names[i]])
     axes[0, i].set_title(image_names[i][:-4])
   axes[1, 0] = fig.add_subplot(2, 1, 2)
   # Show RGB values
-  concentrations = np.array([float(re.findall(r'\d+\.\d+', i)[0]) for i in image_names])
+  concentrations = np.array([float(i.split('mM')[0]) for i in image_names])
   rgb = []
   for i in image_names:
-    rgb.append(get_rgb(processed_images[i]))
+    rgb.append(get_rgb(imgs[i]))
   # Plots of R
   red = np.array([i[0] for i in rgb])
   p1 = axes[1, 0].plot(concentrations, red, color="lightcoral", marker="o")
