@@ -71,8 +71,6 @@ def comparison(images, concentration_range):
   blue_sd = [i[2] for i in sd]
   p3 = plt.plot(concentrations, blue, color="cornflowerblue", marker="s")
   plt.errorbar(concentrations, blue, blue_sd, color="cornflowerblue", capsize=5)
-  # Color bars
-  # plt.bar(pHs, [100] * 7, width=0.1, color=[(i[0]/100, i[1]/100, i[2]/100, 0.2) for i in rgb])
   # Add legends
   plt.legend((p1[0], p2[0], p3[0]), ("R", "G", "B"), loc='upper right')
   # Axis range
@@ -86,9 +84,12 @@ def comparison(images, concentration_range):
 
 def main():
   images = []
-  concentration_range = [0, 0.5, 1, 2]
+  concentration_range = [0, 0.05, 0.25, 0.50, 1, 2]
   for i in concentration_range:
-    images.append(load_images('calibration curve//' + str(i)))
+    con = str(i)
+    if con == '0.5':
+      con = '0.50'
+    images.append(load_images('calibration curve//' + con))
   comparison(images, concentration_range)
 
 
