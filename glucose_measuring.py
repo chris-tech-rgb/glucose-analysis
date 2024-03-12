@@ -34,7 +34,7 @@ def average_rgb(img):
   return average_rgb
 
 def fitting_function(rgb):
-  """A fitting function of the relationship between pH and RGB."""
+  """A fitting function of the relationship between concentration and RGB."""
   with open('fitting function.csv') as f:
     reader = csv.reader(f)
     rows = [row for row in reader]
@@ -81,13 +81,13 @@ def concentration(imgs):
   pH = [fitting_function(i) for i in rgb]
   axe_ph.plot(range(0, number), pH, color="purple", marker="o")
   for a, b in zip(range(0, number), pH):
-    axe_ph.text(a, b + 0.25, "pH" + str("{:.2f}".format(b)), color="purple")
+    axe_ph.text(a, b + 0.25, str("{:.2f}".format(b)) + "mM", color="purple")
   # Add legends
   axes[1, 0].legend((p1[0], p2[0], p3[0]), ("R", "G", "B"), loc='upper center', bbox_to_anchor=(0.05, 1.3))
   plt.show()
 
 def main():
-  image_dict = load_images('samples')
+  image_dict = load_images('training data')
   concentration(image_dict)
 
 
