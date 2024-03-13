@@ -84,7 +84,7 @@ def comparison(images, concentration_range):
 
 def main():
   images = []
-  concentration_range = [0, 0.05, 0.25, 0.50, 1, 2]
+  concentration_range = [0, 0.05, 0.25, 0.50, 1, 1.5, 2]
   for i in concentration_range:
     con = str(i)
     if con == '0.5':
