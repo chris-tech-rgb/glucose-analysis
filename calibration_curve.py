@@ -78,7 +78,7 @@ def comparison(images, concentration_range):
   # plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
   # plt.gca().xaxis.set_minor_locator(MultipleLocator(0.5))
   # plt.gca().yaxis.set_minor_locator(MultipleLocator(10))
-  plt.xlabel("Concentration (mM)")
+  plt.xlabel("Glucose concentration (mM)")
   plt.ylabel("Percentage of RGB color (%)")
   plt.show()
 
