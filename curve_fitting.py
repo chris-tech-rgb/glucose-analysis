@@ -26,7 +26,7 @@ b_values = rgb_values[:, 2]
 # Perform the curve-fit
 popt, pcov = curve_fit(func, rgb_values, pH_values, maxfev = 200000)
 a, n1, b, n2, c, n3 = popt
-print("Fitting function:\npH = " + str(a) + " x R^(" + str(n1) + ") + " + str(b) + " x G^(" + str(n2) + ") + " + str(c) + " x B^(" + str(n3) + ")")
+print("Fitting function:\nConcentration = " + str(a) + " x R^(" + str(n1) + ") + " + str(b) + " x G^(" + str(n2) + ") + " + str(c) + " x B^(" + str(n3) + ")")
 
 # Create figure
 fig = plt.figure()
@@ -44,7 +44,7 @@ img = ax.scatter(R, G, B, c=pH, cmap='viridis_r')
 
 # Colorbar
 colorbar = fig.colorbar(img, location='left')  # Set position to 'left'
-colorbar.set_label('pH')
+colorbar.set_label('Concentration (mM)')
 
 # Set labels
 ax.set_xlabel('R')
