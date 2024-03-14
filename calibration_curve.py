@@ -86,10 +86,10 @@ def main():
   images = []
   concentration_range = [0, 0.05, 0.25, 0.50, 1, 1.5, 2]
   for i in concentration_range:
-    con = str(i)
-    if con == '0.5':
-      con = '0.50'
-    images.append(load_images('calibration curve//' + con))
+    name = str(i)
+    if len(str(i)) == 3:
+      name = name + '0'
+    images.append(load_images('calibration curve//' + name))
   comparison(images, concentration_range)
 
 
