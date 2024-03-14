@@ -56,7 +56,7 @@ def concentration(imgs):
     axes[0, i] = fig.add_subplot(2, number, 1+i)
     axes[0, i].axis("off")
     axes[0, i].imshow(imgs[image_names[i]])
-    axes[0, i].set_title(image_names[i][:-4].split(' ')[0])
+    axes[0, i].set_title(image_names[i].split('mM')[0])
   axes[1, 0] = fig.add_subplot(2, 1, 2)
   # Show RGB values
   rgb = []
@@ -77,11 +77,11 @@ def concentration(imgs):
   axes[1, 0].set_ylabel('RGB')
   # Show predicted value of pH
   axe_ph = axes[1, 0].twinx()
-  axe_ph.set_ylabel('pH')
+  axe_ph.set_ylabel('Concentration (mM)')
   pH = [fitting_function(i) for i in rgb]
   axe_ph.plot(range(0, number), pH, color="purple", marker="o")
   for a, b in zip(range(0, number), pH):
-    axe_ph.text(a, b + 0.25, str("{:.2f}".format(b)) + "mM", color="purple")
+    axe_ph.text(a, b + 0.25, str("{:.2f}".format(b)), color="purple")
   # Add legends
   axes[1, 0].legend((p1[0], p2[0], p3[0]), ("R", "G", "B"), loc='upper center', bbox_to_anchor=(0.05, 1.3))
   plt.show()
