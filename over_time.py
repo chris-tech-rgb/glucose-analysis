@@ -1,4 +1,3 @@
-import image_processing as ip
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -39,23 +38,20 @@ def comparison(imgs):
     return
   # Remove background
   image_names = list(imgs.keys())
-  processed_images = {}
-  for i in image_names:
-    processed_images[i] = ip.remove_background(imgs[i], ip.preprocess(imgs[i]))
   # Display images
   fig = plt.figure(figsize=(8, 8))
   axes = np.zeros((2, number), dtype=object)
   for i in range(0, number):
     axes[0, i] = fig.add_subplot(2, number, 1+i)
     axes[0, i].axis("off")
-    axes[0, i].imshow(processed_images[image_names[i]])
+    axes[0, i].imshow(imgs[image_names[i]])
     axes[0, i].set_title(image_names[i][:-4])
   axes[1, 0] = fig.add_subplot(2, 1, 2)
   # Show RGB values
   time = np.array([int(re.findall(r'\d+', i)[0]) for i in image_names])
   rgb = []
   for i in image_names:
-    color = get_rgb(processed_images[i])
+    color = get_rgb(imgs[i])
     rgb.append(color)
   # Plots and errorbars of R
   red = np.array([i[0] for i in rgb])
@@ -75,7 +71,7 @@ def comparison(imgs):
   plt.show()
 
 def main():
-  image_dict = load_images('ph4 6h')
+  image_dict = load_images('0.1mM 6h')
   comparison(image_dict)
 
 
