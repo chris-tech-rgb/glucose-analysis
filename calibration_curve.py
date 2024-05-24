@@ -84,7 +84,7 @@ def comparison(images, concentration_range):
 
 def main():
   images = []
-  concentration_range = [0, 0.05, 0.1, 0.25, 0.5, 1, 1.25, 1.5, 2]
+  concentration_range = [0, 0.05, 0.25, 0.5, 1, 1.25, 1.5, 2]
   for i in concentration_range:
     name = str(i)
     if len(str(i)) == 3:
