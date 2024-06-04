@@ -7,7 +7,6 @@ import numpy as np
 import os
 import skimage as ski
 import statistics
-from matplotlib.ticker import (MaxNLocator, MultipleLocator)
 from natsort import natsorted
 
 
