@@ -5,6 +5,7 @@ Draw a calibration curve.
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import pandas as pd
 import skimage as ski
 import statistics
 from natsort import natsorted
@@ -55,6 +56,10 @@ def comparison(images, concentration_range):
     color, st_dev = rgb_stdev(i)
     rgb.append(color)
     sd.append(st_dev)
+  # Export as excel
+  df = pd.DataFrame([[a] + b + c for a, b, c in zip(concentrations, rgb, sd)],
+  columns=['pH', 'R', 'G', 'B', 'SD R', 'SD G', 'SD B'])
+  df.to_excel("glucose concentration calibration curve.xlsx", index=False)
   # Plots and errorbars of R
   red = np.array([i[0] for i in rgb])
   red_sd = [i[0] for i in sd]
