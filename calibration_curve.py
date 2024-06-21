@@ -58,7 +58,7 @@ def comparison(images, concentration_range):
     sd.append(st_dev)
   # Export as excel
   df = pd.DataFrame([[a] + b + c + [d] for a, b, c, d in zip(concentrations, rgb, sd, [sum(triplet) / len(triplet) for triplet in sd])],
-  columns=['Glucose concentration', 'R', 'G', 'B', 'SD of R', 'SD of G', 'SD of B', 'Average SD'])
+  columns=['Glucose concentration (mM)', 'R', 'G', 'B', 'SD of R', 'SD of G', 'SD of B', 'Average SD'])
   df.to_excel("glucose concentration calibration curve.xlsx", index=False)
   # Plots and errorbars of R
   red = np.array([i[0] for i in rgb])
