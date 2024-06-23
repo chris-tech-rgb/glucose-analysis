@@ -91,8 +91,8 @@ def concentration(imgs):
   plt.show()
   # Export as excel
   df = pd.DataFrame([[a] + [float("{:.2f}".format(b))] + c.tolist() for a, b, c in zip(measured, pH, rgb)],
-  columns=['Lactate concentration (mM, measured)', 'Lactate concentration (mM, predicted)', 'R', 'G', 'B'])
-  df.to_excel("lactate concentration predicting.xlsx", index=False)
+  columns=['Glucose concentration (mM, measured)', 'Glucose concentration (mM, predicted)', 'R', 'G', 'B'])
+  df.to_excel("glucose concentration predicting.xlsx", index=False)
 
 def main():
   image_dict = load_images('training data')
