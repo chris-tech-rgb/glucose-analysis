@@ -43,7 +43,7 @@ def rgb_stdev(imgs):
   bs = [i[2] for i in rgbs]
   average_rgb = [statistics.mean(rs), statistics.mean(gs), statistics.mean(bs)]
   st_dev = [statistics.stdev(rs), statistics.stdev(gs), statistics.stdev(bs)]
-  return average_rgb, st_dev
+  return average_rgb, st_dev, rgbs
 
 def comparison(images, concentration_range):
   """Display the result of comparison and the RGB value of each one."""
@@ -52,14 +52,19 @@ def comparison(images, concentration_range):
   concentrations = concentration_range
   rgb = []
   sd = []
+  rgbs = []
   for i in images:
-    color, st_dev = rgb_stdev(i)
+    color, st_dev, colors = rgb_stdev(i)
     rgb.append(color)
     sd.append(st_dev)
+    rgbs += colors
   # Export as excel
   df = pd.DataFrame([[a] + b + c + [d] for a, b, c, d in zip(concentrations, rgb, sd, [sum(triplet) / len(triplet) for triplet in sd])],
-  columns=['Glucose concentration (mM)', 'R (%)', 'G (%)', 'B (%)', 'SD of R', 'SD of G', 'SD of B', 'Average SD'])
+                    columns=['Glucose concentration (mM)', 'R (%)', 'G (%)', 'B (%)', 'SD of R', 'SD of G', 'SD of B', 'Average SD'])
   df.to_excel("excel/glucose concentration calibration curve.xlsx", index=False)
+  df = pd.DataFrame([[a] + b for a, b in zip([element for element in concentrations for _ in range(3)], rgbs)],
+                    columns=['Glucose concentration (mM)', 'R (%)', 'G (%)', 'B (%)'])
+  df.to_excel("excel/raw data.xlsx", index=False)
   # Plots and errorbars of R
   red = np.array([i[0] for i in rgb])
   red_sd = [i[0] for i in sd]
